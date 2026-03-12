@@ -1,11 +1,11 @@
-test:
+test: test.cpp
 	g++ -std=c++17 -O2 test.cpp -o test
 	./test
 
-main:
+main: main.cpp
 	g++ -std=c++17 -O2 main.cpp -o main
 
-testmain: clean main
+testmain: main
 	./main < .in
 
 clean:
