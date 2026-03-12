@@ -27,8 +27,34 @@ typedef long long ll;
     computed on the list
 */
 
+const ll MAXX = 1e5+1;
+const ll MAXN = 1e4+1;
+
+ll prices[MAXN] = {0};
+ll pages[MAXN] = {0};
+
+ll dp[MAXX] = {0};
+
+ll dpI(ll x, ll n) {
+    for (ll i = 0; i < n; i++) {
+        for (ll j = x; j >= prices[i]; j--) {
+            dp[j] = max(dp[j], dp[j - prices[i]] + pages[i]);
+        }
+    }
+    return dp[x];
+}
 
 int main(void) {
+    ll n, x; cin >> n >> x;
 
+    for (ll i = 0; i < n; i++) {
+        cin >> prices[i];
+    }
+
+    for (ll i = 0; i < n; i++) {
+        cin >> pages[i];
+    }
+
+    cout << dpI(x, n) << endl;
     return 0;
 }
