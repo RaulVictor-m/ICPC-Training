@@ -49,6 +49,7 @@
       #include <cstdlib>
       #include <random>
       #include <limits>
+      #include <climits>
 
       #endif my_stdc_h_INCLUDED
     '';
