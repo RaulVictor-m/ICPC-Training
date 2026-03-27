@@ -44,12 +44,14 @@ namespace seg {
 
 ll sals[MAXN] = {0};
 pair<char, array<ll, 2>> queries[MAXQ] = {};
+
+set<ll> lset;
+unordered_map<ll, ll> lmap;
+vector<ll> sorted;
 ll n, q;
 
 ll compress1() {
    // compression
-    set<ll> lset;
-    unordered_map<ll, ll> lmap;
     for (ll i = 0; i < n; i++) lset.insert(sals[i]);
     for (ll i = 0; i < q; i++) {
         if (queries[i].first == '!')
@@ -73,9 +75,8 @@ ll compress1() {
 
     return index;
 }
+
 ll compress2() {
-    vector<ll> sorted;
-    unordered_map<ll, ll> lmap;
     sorted.reserve(n+q*2);
     for (ll i = 0; i < n; i++) sorted.push_back(sals[i]);
     for (ll i = 0; i < q; i++) {
@@ -119,13 +120,10 @@ int main(void) {
     ll index = compress2();
  
     // solve
-    // cout << "aqui " << endl;
     seg::n = index;
     for (ll i = 0; i < n; i++) seg::seg[index + sals[i]]++;
     seg::build();
 
-
-    // cout << "aqui 2" << endl;
     for (ll i = 0; i < q; i++) {
         if (queries[i].first == '!') {
 
@@ -139,11 +137,7 @@ int main(void) {
             cout << seg::query(queries[i].second[0], queries[i].second[1]+1) << endl;
         }
     }
-    // cout << "fora" << endl;
+    std::quick_exit(0);
 
     return 0;
 }
-    // for (ll i = 0; i < (n+q)*2; i++) {
-    //     cout << seg::seg[i] << " ";
-    // }
-    // cout << endl;
