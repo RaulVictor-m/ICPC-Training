@@ -35,14 +35,23 @@ void dijkstra() {
         qu.pop();
 
         if (cost > dists[i]) continue;
+        if (count < maxf[i] && count > minf[i]) continue;
 
         for (auto [v, c]: graph[i]) {
             const auto t_cost = (c+cost);
 
             if (t_cost == dists[v]) {
                 lcount[v] = (lcount[i] + lcount[v])%MOD;
-                maxf[v] = max(maxf[v], minf[i] + 1);
-                minf[v] = min(minf[v], minf[i] + 1);
+
+                if ((count + 1) < minf[v]) {
+                    minf[v] = count + 1;
+                    qu.push({-t_cost, minf[v], v});
+                }
+
+                if ((count + 1) > maxf[v]) {
+                    maxf[v] = count + 1;
+                    qu.push({-t_cost, maxf[v], v});
+                }
 
             } else if (t_cost < dists[v]){
                 lcount[v] = lcount[i];
