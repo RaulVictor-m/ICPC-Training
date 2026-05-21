@@ -16,7 +16,7 @@ typedef long long ll;
 
 const ll MAXN = (1e5+2)*2;
 namespace seg {
-    ll seg[MAXN*2] = {0};
+    ll seg[MAXN*4] = {0};
     ll n = 0;
 
     ll join(ll a, ll b) {
@@ -33,14 +33,11 @@ namespace seg {
 
     ll remove(int index) {
         int i = 1;
-        while ((i<<1|1) <= 2*n) {
-            cout << "from " << i << " to ";
+        while ((i<<1) <= 2*n) {
             if (seg[i<<1] >= index) i<<=1;
             else index -= seg[i<<1], i = i<<1|1;
-            cout << i << endl;
         }
 
-        cout << " -- i: " << i << endl << endl;
         update(i-n, 0);
         return i-n;
     }
@@ -58,11 +55,11 @@ namespace seg {
 int main(void) {
     ll n; cin >> n;
     vector<ll> vals(++n);
+    ll n2 = 1<<(ll)(log2(n) + 1);
 
-    seg::n = n;
-    for (int i = 1; i < n; seg::seg[(i+n)-1] = 1, i++) cin >> vals[i];
-    seg::build(n);
-    for (int i = 0; i < n; i++) cout << seg::seg[i+n] << " ";cout << endl;
+    seg::n = n2;
+    for (int i = 1; i < n; seg::seg[(i+n2)] = 1, i++) cin >> vals[i];
+    seg::build(n2);
 
     for (int t = 1; t < n; t++) {
         ll i; cin >> i;
@@ -71,7 +68,7 @@ int main(void) {
 
         index = seg::remove(i);
 
-        // cout << vals[index] << " ";
+        cout << vals[index] << " ";
     }
     cout << endl;
 
