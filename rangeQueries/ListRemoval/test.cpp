@@ -31,10 +31,18 @@ namespace seg {
         for (seg[p+=n]=v; p > 1; p>>=1) seg[p>>1] = join(seg[p], seg[p^1]);
     }
 
-    ll remove(int index, int node) {
-        if (index == 1 && node >= n) return node-n;
-        if (seg[node] > index) return remove(index, node<<1);
-        return remove(index-seg[node], node<<1|1);
+    ll remove(int index) {
+        int i = 1;
+        while ((i<<1|1) <= 2*n) {
+            cout << "from " << i << " to ";
+            if (seg[i<<1] >= index) i<<=1;
+            else index -= seg[i<<1], i = i<<1|1;
+            cout << i << endl;
+        }
+
+        cout << " -- i: " << i << endl << endl;
+        update(i-n, 0);
+        return i-n;
     }
 
     ll query(int l, int r) {
@@ -52,17 +60,18 @@ int main(void) {
     vector<ll> vals(++n);
 
     seg::n = n;
-    for (int i = 1; i < n; seg::seg[i+n] = 1, i++) cin >> vals[i];
+    for (int i = 1; i < n; seg::seg[(i+n)-1] = 1, i++) cin >> vals[i];
     seg::build(n);
+    for (int i = 0; i < n; i++) cout << seg::seg[i+n] << " ";cout << endl;
 
     for (int t = 1; t < n; t++) {
         ll i; cin >> i;
 
         ll l = 0, r = n, index = 0;
 
-        index = seg::remove(i, 1);
+        index = seg::remove(i);
 
-        cout << vals[index] << " ";
+        // cout << vals[index] << " ";
     }
     cout << endl;
 
