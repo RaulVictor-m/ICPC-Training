@@ -20,7 +20,7 @@ int main(void) {
         for (int i = 0; i < ((n+1)/2) && m; i++, m--) {
             t_price += level_p;
             ans.push_back((offset+i*step));
-            if (m && ((i+1) >= n)) t_price += extra;
+            if (m && ((i+1)*2 > (n))) t_price += extra;
         }
 
         if (m > 0 && n%2 == 0) {
