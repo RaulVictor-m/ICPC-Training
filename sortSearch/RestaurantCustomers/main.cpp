@@ -10,7 +10,16 @@ typedef long long ll;
 
 /*
     REASON:
+        In here i did a more complex solution
+        its basically a coord compression or the times
+        then i just put start value as 1 and end value as
+        -1 in a prefix sum and compute the prefix at the end
 
+        them its just a matter of finding the maximum point in the 
+        prefix sum 
+
+        however there is a much better and simpler solution i found later
+        https://www.geeksforgeeks.org/dsa/cses-solutions-restaurant-customers/
 */
 
 
