@@ -50,7 +50,7 @@ int main(void) {
         for (auto &p: points) cin >> p[0] >> p[1];
 
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            for (int j = i; j < n; j++) {
                 double dx = pow(points[i][0]-points[j][0], 2);
                 double dy = pow(points[i][1]-points[j][1], 2);
 

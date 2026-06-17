@@ -4,6 +4,7 @@
 */
 
 #include <bits/stdc++.h>
+#include <climits>
 
 using namespace std;
 typedef long long ll;
@@ -12,7 +13,6 @@ typedef long long ll;
     REASON:
 
 */
-
 
 int main(void) {
     string frase, line;
@@ -33,9 +33,8 @@ int main(void) {
                     break;
                 };
 
-                for (auto &c: frase) {
+                for (auto &c: frase)
                     if (c != ' ') c = (((c-'A')+1) % 26) + 'A';
-                }
             }
         }
         if (yes) cout << "S" << endl;
