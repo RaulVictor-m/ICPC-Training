@@ -1,5 +1,5 @@
 /*
- * LINK: 
+ * LINK: https://codeforces.com/gym/104555/problem/C
  * NAME: Caminhada na Montanha
 */
 
