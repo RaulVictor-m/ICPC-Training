@@ -11,14 +11,17 @@ typedef long long ll;
 /*
     REASON:
         1: take all nodes in the graph
-        2: dfs them to find the only correct order from 1 to N
-        3: take weights and coord compress them to fit the segtree
-        4: use the order found in step 2 to find LIS for every index
-        5: be happy after that
+        2: take weights and coord compress them to fit the segtree
+        3: dfs all paths in the graph and do a LIS on every node on the way
+           obs: the LIS needs to be backtracked, so before returning the
+                recursion put the old result back so that it does not 
+                impact the future paths that dont include that node
+
+        be happy after that ;)
 
 */
 namespace seg {
-    long t[100000*2+2] = {0}, n = 0;
+    long t[100000*4] = {0}, n = 0;
 
     void build (long size) {
         for (int i = (n=size)-1; i > 0; i--) t[i] = max(t[i<<1],t[i<<1|1]);
@@ -40,19 +43,30 @@ namespace seg {
 
 vector<vector<long>> graph;
 vector<bool> visited;
-vector<long> order;
 
-void dfs(long i) {
+vector<long> weights;
+vector<long> ans;
+
+void backtrackLIS(long i) {
     if (visited[i]) return;
     visited[i] = 1;
-    order.push_back(i);
-    for (auto v: graph[i]) dfs(v);
+
+    long imax = seg::query(0, weights[i]);
+
+    long old_imax = seg::t[seg::n+weights[i]];
+    seg::update(weights[i], imax+1);
+
+    ans[i] = seg::query(0, seg::n); //LIS
+
+    for (auto v: graph[i]) backtrackLIS(v);
+
+    seg::update(weights[i], old_imax);
 }
 
 int main(void) {
     long n; cin >> n;
-    graph.resize(n+1), visited.resize(n+1);
-    vector<long> weights(n+1);
+    graph.resize(n+1), visited.resize(n+1), weights.resize(n+1);
+    ans.resize(n+1);
 
     for (int i = 1; i < n; i++) {
         long v; cin >> v;
@@ -61,36 +75,24 @@ int main(void) {
     }
 
     // read and compress weights
-    {
-        for (int i = 1; i <= n; i++) {
-            cin >> weights[i];
-        }
-        auto lset = weights;
-        sort(lset.begin(), lset.end());
-        lset.resize(unique(lset.begin(), lset.end())-lset.begin());
+    for (int i = 1; i <= n; i++) cin >> weights[i];
+    auto lset = weights;
 
-        unordered_map<long, long> lmap;
-        for (int i = 1; i <= lset.size(); i++) lmap[lset[i-1]] = i;
+    sort(lset.begin(), lset.end());
+    lset.resize(unique(lset.begin(), lset.end())-lset.begin());
 
-        for (auto &v: weights) v = lmap[v]; //compression
-    }
+    for (auto &v: weights)  //compression
+        v = lower_bound(lset.begin(), lset.end(), v) - lset.begin();
 
-    dfs(1); // finding the order of the array for LIS
+    seg::build(n+5); // max val is n+1 after compression
 
-    vector<long> ans(n+1);
-    // compute LIS
-    {
-        seg::build(n+1); // max val is n+1 after compression
-        for (auto v: order) {
-            long lmax = seg::query(0, weights[v]);
-            ans[v] = lmax+1;
-            seg::update(weights[v], seg::t[n+1+weights[v]]+1);
-        }
-    }
+    // solve
+    backtrackLIS(1);
 
     for (int i = 2; i < ans.size(); i++) {
         cout << ans[i] << " ";
     }
+
     cout << endl;
 
     return 0;
