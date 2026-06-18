@@ -45,65 +45,37 @@ namespace seg {
 ll sals[MAXN] = {0};
 pair<char, array<ll, 2>> queries[MAXQ] = {};
 
-set<ll> lset;
-unordered_map<ll, ll> lmap;
-vector<ll> sorted;
+vector<ll> lset;
 ll n, q;
 
-ll compress1() {
-   // compression
-    for (ll i = 0; i < n; i++) lset.insert(sals[i]);
+ll compress() {
+    lset.reserve(n+q*2);
+    for (ll i = 0; i < n; i++) lset.push_back(sals[i]);
     for (ll i = 0; i < q; i++) {
         if (queries[i].first == '!')
-            lset.insert(queries[i].second[1]);
+            lset.push_back(queries[i].second[1]);
         else {
-            lset.insert(queries[i].second[1]);
-            lset.insert(queries[i].second[0]);
+            lset.push_back(queries[i].second[1]);
+            lset.push_back(queries[i].second[0]);
         }
     }
 
-    ll index = 0;
-    for (auto iset: lset) lmap[iset] = index++;
+    sort(lset.begin(), lset.end());
+    lset.resize(unique(lset.begin(), lset.end()) - lset.begin());
 
-    for (ll i = 0; i < n; i++) sals[i] = lmap[sals[i]];
-    for (ll i = 0; i < q; i++) 
-        if (queries[i].first == '!')
-            queries[i].second[1] = lmap[queries[i].second[1]];
-        else 
-            queries[i].second[0] = lmap[queries[i].second[0]],
-            queries[i].second[1] = lmap[queries[i].second[1]];
+    for (ll i = 0; i < n; i++) 
+        sals[i] = lower_bound(lset.begin(), lset.end(), sals[i]) - lset.begin();
 
-    return index;
-}
-
-ll compress2() {
-    sorted.reserve(n+q*2);
-    for (ll i = 0; i < n; i++) sorted.push_back(sals[i]);
     for (ll i = 0; i < q; i++) {
-        if (queries[i].first == '!')
-            sorted.push_back(queries[i].second[1]);
-        else {
-            sorted.push_back(queries[i].second[1]);
-            sorted.push_back(queries[i].second[0]);
-        }
+        auto &[c, v] = queries[i];
+        if (c == '!')
+            v[1] = lower_bound(lset.begin(), lset.end(), v[1]) - lset.begin();
+        else 
+            v[0] = lower_bound(lset.begin(), lset.end(), v[0]) - lset.begin(),
+            v[1] = lower_bound(lset.begin(), lset.end(), v[1]) - lset.begin();
     }
 
-    sort(sorted.begin(), sorted.end());
-    sorted.resize(unique(sorted.begin(), sorted.end()) - sorted.begin());
-
-    ll index = 0;
-    lmap.reserve(n+(q*2));
-    for (auto iset: sorted) lmap[iset] = index++;
-
-    for (ll i = 0; i < n; i++) sals[i] = lmap[sals[i]];
-    for (ll i = 0; i < q; i++) 
-        if (queries[i].first == '!')
-            queries[i].second[1] = lmap[queries[i].second[1]];
-        else 
-            queries[i].second[0] = lmap[queries[i].second[0]],
-            queries[i].second[1] = lmap[queries[i].second[1]];
-
-    return index;
+    return lset.size();
 }
 
 int main(void) {
@@ -117,7 +89,7 @@ int main(void) {
     for (ll i = 0; i < q; i++)
         cin >> queries[i].first >> queries[i].second[0] >> queries[i].second[1];
 
-    ll index = compress2();
+    ll index = compress();
  
     // solve
     seg::n = index;
