@@ -1,5 +1,5 @@
 /*
- * LINK: 
+ * LINK: https://codeforces.com/gym/106598/problem/I
  * NAME: I
 */
 
@@ -33,7 +33,8 @@ int main(void) {
     //generating permutations
     set<string> permutations;
 
-    long digits = num.size(), missing_digits = 11 - num.size();
+    long digits = num.size();
+    long missing_digits = 11 - num.size();
 
     string gen_comb;
     gen_comb.resize(11);
