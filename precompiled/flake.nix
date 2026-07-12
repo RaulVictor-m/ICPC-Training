@@ -17,7 +17,7 @@
     devShells.x86_64-linux.default = pkgs.mkShell {
 
       shellHook = ''
-        SHELL="${pkgs.fish}/bin/fish";
+        SHELL="fish";
         exec fish
       '';
 

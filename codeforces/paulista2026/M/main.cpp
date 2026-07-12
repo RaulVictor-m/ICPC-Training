@@ -16,24 +16,11 @@ int main(void) {
     string s, t; cin >> s >> t;
     long p, q; cin >> p >> q;
 
-    if (!p || !q) {
-        cout << "=" << endl;
-        return 0;
-    }
-
     string st = s+t, ts = t+s;
 
-    for (long i = 0; i < st.size(); i++) {
-        if (st[i] < ts[i]) {
-            cout << '<' << endl;
-            return 0;
+    if (!p || !q || st == ts) cout << '=' << endl;
+    else if (st < ts)         cout << '<' << endl;
+    else                      cout << '>' << endl;
 
-        } else  if (st[i] > ts[i]) {
-            cout << '>' << endl;
-            return 0;
-        }
-    }
-
-    cout << '=' << endl;
     return 0;
 }
