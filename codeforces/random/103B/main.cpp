@@ -72,6 +72,12 @@ int main(void) {
         }
     }
 
+    for (int i = 1; i <= n; i++) 
+        if (!vis[i]) {
+            cout << "NO" << endl;
+            return 0;
+        }
+
     cout << "FHTAGN!" << endl;
     return 0;
 }
