@@ -1,6 +1,7 @@
 /*
  * LINK: https://codeforces.com/problemset/problem/1914/F
  * NAME: F. Programming Competition
+ * STATUS: REVISIT
 */
 
 #include <bits/stdc++.h>
@@ -17,12 +18,14 @@ void csz(int v) {
 }
 
 int dfs(int v, int k = 0) {
-    if (sz[v] == 1) return 0;
+    int total = 0, mu = -1;
 
-    int total = sz[v]-1, mu = adj[v][0];
+    for (auto u: adj[v]) {
+        total += sz[u];
+        if (mu == -1 || sz[mu] < sz[u]) mu = u;
+    }
 
-    for (auto u: adj[v]) 
-        if (sz[u] > sz[mu]) mu = u;
+    if (total == 0) return 0;
 
     if (sz[mu] <= total) return (total-k)/2;
     total -= sz[mu];
