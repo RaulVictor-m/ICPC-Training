@@ -35,8 +35,10 @@ int main(void) {
             qu.pop();
             sz++;
 
-            for (auto u: adj[v])
-                if (!(--deg[u])) d[u] = d[v]+(v > u), qu.push(u);
+            for (auto u: adj[v]) {
+                if (deg[u] >= 0) d[u] = max(d[u], d[v]+(v > u));
+                if (!(--deg[u])) qu.push(u);
+            }
         }
 
         if (sz < n)
