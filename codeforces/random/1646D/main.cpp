@@ -41,7 +41,7 @@ int main(void) {
     int s2 = accumulate(v2.begin(), v2.end(), 0);
 
     if (a1 < a2) swap(a1, a2), swap(s1, s2), swap(v1, v2);
-    else if(a1 == a2 && s1 < s2) swap(s1, s2), swap(v1, v2);
+    else if(a1 == a2 && s1 > s2) swap(s1, s2), swap(v1, v2);
 
     cout << (a1+(n==2)) << ' ' << s1 << '\n';
     for (int i = 1; i <= n; i++) cout << v1[i] << " ";
