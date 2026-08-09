@@ -8,22 +8,32 @@
 using namespace std;
 typedef long long ll;
 
-unordered_map<ll, vector<ll>> xs, ys;
+vector<vector<ll>> xs, ys;
 vector<pair<ll, ll>> points;
-vector<bool> vis;
+vector<bool> vis, xvis, yvis;
 
 void dfs(ll i) {
     if (vis[i]) return;
     vis[i] = 1;
 
     auto [x, y] = points[i];
-    for (auto v: xs[x]) dfs(v);
-    for (auto v: ys[y]) dfs(v);
+    if (!xvis[x]) {
+        xvis[x] = 1;
+        for (auto v: xs[x]) dfs(v);
+    }
+
+    if (!yvis[y]) {
+        yvis[y] = 1;
+        for (auto v: ys[y]) dfs(v);
+    }
 }
 
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     ll n; cin >> n;
-    vis.resize(n);
+    vis.resize(n), xs.resize(1001), ys.resize(1001);
+    xvis.resize(1001), yvis.resize(1001);
     points.resize(n);
 
     for (int i = 0; i < n; i++) {
