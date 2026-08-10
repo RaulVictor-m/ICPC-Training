@@ -35,6 +35,8 @@ bool bridges(ll v, ll p = 0) {
 
 
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     int n, m; cin >> n >> m;
 
     adj.resize(n+1), low.resize(n+1), tin.resize(n+1), edges.resize(m+1);
