@@ -34,7 +34,6 @@ int main(void) {
                 int v = i<<1, u = j<<1;
                 adj[v].push_back(u^1);
                 adj[u].push_back(v^1);
-
                 adj[v^1].push_back(u);
                 adj[u^1].push_back(v);
             }
