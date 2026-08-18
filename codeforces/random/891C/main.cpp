@@ -12,82 +12,97 @@ const int N = 5e5+5;
 
 namespace uf {
     ll par[N], sz[N];
+    vector<pair<int, ll>> hpar;
+    vector<pair<int, ll>> hsz;
     void build(int n) {
-        for (int i = 1; i <= n; i++) par[i] = i;
+        for (int i = 1; i <= n; i++) par[i] = i, sz[i] = 1;
     }
 
     int find(int v) {
-        return par[v] == v ? v : find(par[v]);
+        return (par[v] == v ? v : find(par[v]));
     }
 
-    bool join(int a, int b, ll len) {
+    bool join(int a, int b) {
         a = find(a), b = find(b);
 
         if (a == b) return false;
         if (sz[a] < sz[b]) swap(a, b);
 
-        sz[a] = sz[b]+len, par[b] = a;
+        hpar.push_back({b, par[b]});
+        hsz.push_back({a, sz[a]});
+
+        sz[a] += sz[b], par[b] = a;
         return true;
     }
+
+    int snap() {
+        return hpar.size();
+    }
+
+    void rollback(int snap) {
+        while (snap < hpar.size()) {
+            sz[hsz.back().first] = hsz.back().second;
+            par[hpar.back().first] = hpar.back().second;
+            hpar.pop_back();
+            hsz.pop_back();
+        }
+    }
 }
 
-vector<array<ll, 3>> edges(N);
-
-vector<array<ll, 20>> par(N), mx(N);
-vector<ll> dep(N);
-
-vector<vector<int>> adj(N);
+vector<array<ll, 3>> ed(N);
 vector<bool> alive(N);
 
-
-void pre(int v, int p) {
-    for (int k = 1; k < 20; k++)
-        par[v][k] = par[par[v][k-1]][k-1],
-        mx[v][k] = max(mx[v][k-1], mx[par[v][k-1]][k-1]);
-
-    for (auto [u, w]: adj[v]) {
-        if (u == p) continue;
-        par[u][0] = p, mx[u][0] = w;
-        dep[u] = dep[v]+1;
-        pre(u, v);
-    }
-}
-
-ll dist(int a, int b) {
-    if (dep[a] > dep[b]) swap(a, b);
-    int h = dep[b] - dep[a];
-
-    ll lmx = 0;
-    for (int k = 0; k < 20; k++)
-        if ((h>>k)&1)
-            lmx = max(mx[b][k], lmx), b = par[b][k];
-
-    if (a == b) return lmx;
-
-    for (int k = 19; k >= 0; k--) {
-
-    }
-
-}
-
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     int n, m; cin >> n >> m;
 
     uf::build(n);
+    map<ll, vector<pair<int, int>>> graph;
+
     for (int i = 1; i <= m; i++) {
-        cin >> edges[i][1] >> edges[i][2] >> edges[i][0];
+        auto &[w, a, b] = ed[i];
+        cin >> a >> b >> w;
+
+        graph[w].push_back({a, b});
     }
 
-    sort(edges.begin(), edges.end());
 
-    for (int i = 1; i <= m; i++) {
-        alive[i] = uf::join(edges[i][1], edges[i][2], edges[i][0]);
-        if (alive[i]) {
-            adj[edges[i][1]].emplace_back(edges[i][2], edges[i][0]);
-            adj[edges[i][2]].emplace_back(edges[i][1], edges[i][0]);
+    int q; cin >> q;
+    map<ll, vector<pair<int, vector<int>>>> queries;
+    for (int id = 1; id <= q; id++) {
+        int k; cin >> k;
+        map<ll, vector<int>> c_ed;
+        while (k--) {
+            int e; cin >> e;
+            auto &[w, a, b] = ed[e];
+            c_ed[w].push_back(e);
         }
+
+        for (auto &[w, lst]: c_ed) 
+            queries[w].push_back({id, lst});
     }
 
+    vector<bool> ans(q+1, 1);
+    for (auto &[w, lst]: graph) {
+
+        for (auto &[id, lst]: queries[w]) {
+            int snap = uf::snap();
+            for (auto e: lst) {
+                if (!uf::join(ed[e][1], ed[e][2])) {
+                    ans[id] = 0;
+                    break;
+                }
+            }
+            uf::rollback(snap);
+        }
+
+        for (auto &[a, b]: lst) uf::join(a, b);
+    }
+
+    for (int i = 1; i <= q; i++) 
+        if(ans[i]) cout << "YES\n";
+        else       cout << "NO\n";
 
     return 0;
 }
