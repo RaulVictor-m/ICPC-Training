@@ -23,6 +23,7 @@
 
 
       packages = with pkgs; [
+        valgrind
         zsh
         gcc
         mold
@@ -40,6 +41,11 @@
         (gccPhc {pkgs = pkgs; name = "m_gch_20_g";  flags = "-std=c++20 -g";})
         (gccPhc {pkgs = pkgs; name = "m_gch_20_O0"; flags = "-std=c++20 -O0";})
         (gccPhc {pkgs = pkgs; name = "m_gch_20_O2"; flags = "-std=c++20 -O2";})
+        (gccPhc {
+          pkgs = pkgs;
+          name = "m_gch_HARD";
+          flags = "-O0 -g -std=c++17 -D_GLIBCXX_DEBUG -fsanitize=address,undefined";
+        })
       ];
 
       NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=gold";
