@@ -44,7 +44,7 @@
         (gccPhc {
           pkgs = pkgs;
           name = "m_gch_HARD";
-          flags = "-O0 -g -std=c++17 -D_GLIBCXX_DEBUG -fsanitize=address,undefined";
+          flags = "-O0 -g -std=c++17 -D_GLIBCXX_DEBUG -fsanitize=address,undefined -fanalyzer";
         })
       ];
 
