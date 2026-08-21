@@ -13,7 +13,7 @@ const ll INF = 1e16;
 
 namespace seg {
     vector<ll> t(N*4), lz(N*4);
-    void build(int v, int tl, int tr, vector<ll> vs) {
+    void build(int v, int tl, int tr, const vector<ll> &vs) {
         if (tl == tr) {
             t[v] = vs[tl];
             return;
@@ -80,6 +80,8 @@ void solve(int v) {
 }
 
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     int n, m; cin >> n >> m;
 
     for (int i = 2; i <= n; i++) {
