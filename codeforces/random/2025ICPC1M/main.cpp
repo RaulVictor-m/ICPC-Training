@@ -25,7 +25,7 @@ int main(void) {
     vector<ll> vs(n);
     for (auto &v: vs) cin >> v;
 
-    ll l = 0, r = 1e16, ans = 0;
+    ll l = 1, r = 1e14, ans = 1;
     while (l <= r) {
         ll mid = (l+r)/2;
         if (check(vs, mid, k)) l = mid+1, ans = mid;
