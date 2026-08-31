@@ -31,6 +31,8 @@ void dfs(ll i, ll h) {
 }
 
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
     ll n; cin >> n;
     graph.resize(n+1), tin.resize(n+1), tout.resize(n+1);
     h_nodes.resize(n+1), parent.resize(n+1), ht.resize(n+1);
