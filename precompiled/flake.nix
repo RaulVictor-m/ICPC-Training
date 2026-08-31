@@ -33,19 +33,18 @@
         (gccPhc {pkgs = pkgs; name = "m_gch_g";     flags = "-g";})
         (gccPhc {pkgs = pkgs; name = "m_gch_O0";    flags = "-O0";})
         (gccPhc {pkgs = pkgs; name = "m_gch_O2";    flags = "-O2";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_17";    flags = "-std=c++17";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_17_g";  flags = "-std=c++17 -g";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_17_O0"; flags = "-std=c++17 -O0";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_17_O2"; flags = "-std=c++17 -O2";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_20";    flags = "-std=c++20";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_20_g";  flags = "-std=c++20 -g";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_20_O0"; flags = "-std=c++20 -O0";})
-        (gccPhc {pkgs = pkgs; name = "m_gch_20_O2"; flags = "-std=c++20 -O2";})
-        (gccPhc {
-          pkgs = pkgs;
-          name = "m_gch_HARD";
-          flags = "-O0 -g -std=c++17 -D_GLIBCXX_DEBUG -fsanitize=address,undefined";
-        })
+        (gccPhc {pkgs = pkgs; name = "m_gch_17";    flags = "-std=gnu++17";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_17_g";  flags = "-std=gnu++17 -g";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_17_O0"; flags = "-std=gnu++17 -O0";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_17_O2"; flags = "-std=gnu++17 -O2";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_20";    flags = "-std=gnu++20";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_20_g";  flags = "-std=gnu++20 -g";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_20_O0"; flags = "-std=gnu++20 -O0";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_20_O2"; flags = "-std=gnu++20 -O2";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_23";    flags = "-std=gnu++23";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_23_g";  flags = "-std=gnu++23 -g";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_23_O0"; flags = "-std=gnu++23 -O0";})
+        (gccPhc {pkgs = pkgs; name = "m_gch_23_O2"; flags = "-std=gnu++23 -O2";})
       ];
 
       NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=gold";
