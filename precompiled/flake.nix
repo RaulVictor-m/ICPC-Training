@@ -26,6 +26,7 @@
         valgrind
         zsh
         gcc
+        vim
         mold
 
         (mktempl (pkgs))
