@@ -14,6 +14,8 @@ typedef long long ll;
 */
 
 int main(void) {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
     long n, q; cin >> n >> q;
 
     vector<long> vals(n);
