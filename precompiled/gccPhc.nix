@@ -4,6 +4,7 @@ pkgs.stdenv.mkDerivation rec {
   pname  = "${name}";
   version = "1.0";
   buildInputs = with pkgs; [ gcc ];
+  # hardeningDisable = [ "all" ];
 
   dontUnpack = true;
   dontBuild = true;
@@ -66,24 +67,24 @@ pkgs.stdenv.mkDerivation rec {
   // ============================================================================
 
   // Pairs
-  template struct std::pair<int, int>;
-  template struct std::pair<long long, long long>;
+  // template struct std::pair<int, int>;
+  // template struct std::pair<long long, long long>;
 
   // 1D Vectors
-  template class std::vector<int>;
-  template class std::vector<long long>;
-  template class std::vector<std::string>;
-  template class std::vector<std::pair<int, int>>;
-  template class std::vector<std::pair<long long, long long>>;
+  // template class std::vector<int>;
+  // template class std::vector<long long>;
+  // template class std::vector<std::string>;
+  // template class std::vector<std::pair<int, int>>;
+  // template class std::vector<std::pair<long long, long long>>;
 
   // 2D Vectors
-  template class std::vector<std::vector<int>>;
-  template class std::vector<std::vector<long long>>;
-  template class std::vector<std::vector<std::pair<int, int>>>;
+  // template class std::vector<std::vector<int>>;
+  // template class std::vector<std::vector<long long>>;
+  // template class std::vector<std::vector<std::pair<int, int>>>;
 
   // Requested Trees
-  template class std::set<long long>;
-  template class std::map<long long, long long>;
+  // template class std::set<long long>;
+  // template class std::map<long long, long long>;
 
   #endif // MY_STDC_H_INCLUDED
   '';

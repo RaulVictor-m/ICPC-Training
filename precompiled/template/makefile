@@ -1,10 +1,8 @@
-.PHONY: testmain
-
 test: test.cpp
-	g++ -std=gnu++23 -O2 test.cpp -o test
+	g++ -std=gnu++17 -O0 -Wno-c++23-extensions -fno-exceptions -fno-rtti -fno-stack-protector -pipe test.cpp -o test
 
 main: main.cpp
-	g++ -std=gnu++23 -O0 -fno-exceptions -fno-rtti -fno-stack-protector -pipe main.cpp -o main
+	g++ -std=gnu++17 -O0 -Wno-c++23-extensions -fno-exceptions -fno-rtti -fno-stack-protector -pipe main.cpp -o main
 
 debug: main.cpp
 	g++ -std=gnu++23 -g -Wall -Wextra -D_GLIBCXX_DEBUG main.cpp -o main
