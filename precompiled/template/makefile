@@ -1,8 +1,13 @@
+.PHONY: testmain
+
 test: test.cpp
 	g++ -std=gnu++23 -O2 test.cpp -o test
 
 main: main.cpp
-	g++ -std=gnu++23 -O2 main.cpp -o main
+	g++ -std=gnu++23 -O0 -fno-exceptions -fno-rtti -fno-stack-protector -pipe main.cpp -o main
+
+debug: main.cpp
+	g++ -std=gnu++23 -g -Wall -Wextra -D_GLIBCXX_DEBUG main.cpp -o main
 
 testmain: main
 	./main < .in
@@ -10,14 +15,5 @@ testmain: main
 testtest: test
 	./test < .in
 
-mainHard: main.cpp
-	g++ -O0 -g -std=gnu++23 -Wall -Wextra -D_GLIBCXX_DEBUG -fsanitize=address,undefined -fanalyzer main.cpp -o mainHard
-
-testmainH: mainHard
-	./mainHard < .in
-
-testmainHV: mainHard
-	valgrind ./mainHard < .in
-
 clean:
-	rm -f ./main ./test ./mainHard
+	rm -f ./main ./test
