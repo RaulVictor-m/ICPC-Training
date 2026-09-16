@@ -28,6 +28,7 @@
         gcc
         vim
         mold
+        dmd
 
         (mktempl (pkgs))
 
