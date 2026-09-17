@@ -29,6 +29,7 @@
         vim
         mold
         dmd
+        rund
 
         (mktempl (pkgs))
 
