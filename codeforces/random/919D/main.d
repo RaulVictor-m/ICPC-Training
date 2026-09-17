@@ -37,10 +37,7 @@ void main() {
         }
     }
 
-    int mx = 0;
-    foreach (ref rw; dp) mx = max(mx, max(rw.tupleof));
-
-    if (cnt == n) writeln(mx);
+    if (cnt == n) writeln(dp.fold!"max(a, max(b.tupleof))"(0));
     else          writeln(-1);
 }
 
