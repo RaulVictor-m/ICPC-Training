@@ -28,8 +28,7 @@
         gcc
         vim
         mold
-        dmd
-        rund
+        dmd rund dtools
 
         (mktempl (pkgs))
 
