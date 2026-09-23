@@ -14,12 +14,12 @@ void main() {
         bool ok(long m) {
             long acc = 0;
             foreach (v; ht)
-                if ((acc += max(m-v, 0L)) > x) return false;
+                if ((acc += max(m-v, 0)) > x) return false;
 
             return true;
         }
 
-        long l = 1, r = 10L^^18L;
+        long l = 1, r = 2*(10^^9)+1;
         while (l <= r) {
             long m = (l+r)/2;
             if (ok(m)) l = m+1;
