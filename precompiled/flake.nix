@@ -55,7 +55,7 @@
         (gccPhc {pkgs = pkgs; name = "m_gch_23_O2"; flags = "-std=gnu++23 -O2";})
       ];
 
-      NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=lld";
+      NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=gold";
     };
 
   };
