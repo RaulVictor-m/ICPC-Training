@@ -28,6 +28,7 @@
         rustc
         mold lld
         dmd rund
+        ocaml
         vim
 
         (mktempl (pkgs))
