@@ -23,12 +23,12 @@
 
 
       packages = with pkgs; [
-        valgrind
-        zsh
+        valgrind zsh
         gcc
+        rustc
+        mold lld
+        dmd rund
         vim
-        mold
-        dmd rund dtools
 
         (mktempl (pkgs))
 
@@ -54,7 +54,7 @@
         (gccPhc {pkgs = pkgs; name = "m_gch_23_O2"; flags = "-std=gnu++23 -O2";})
       ];
 
-      NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=gold";
+      NIX_CFLAGS_COMPILE = (builtins.getEnv "NIX_CFLAGS_COMPILE") + "-fuse-ld=lld";
     };
 
   };
