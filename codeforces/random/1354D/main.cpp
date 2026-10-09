@@ -47,12 +47,7 @@ int main(void) {
     cin.tie(nullptr)->sync_with_stdio(false);
     int n, q; cin >> n >> q;
 
-    rep(i, 0, n) {
-        int v; cin >> v;
-        seg::add(0, 1, n, v);
-    }
-
-    rep(i, 0, q) {
+    rep(i, 0, n+q) {
         int v; cin >> v;
         if (v > 0) seg::add(0, 1, n, v);
         else       seg::rem(0, 1, n, -v);
